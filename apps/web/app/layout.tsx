@@ -5,7 +5,10 @@ import "@palanikannan1437/rc4community-navbar/styles.css";
 import NavigationMenuDemo from "./navbar/nav";
 import { getSession } from "../lib/session";
 
-import { fetchNavData } from "@palanikannan1437/rc4community-navbar-demo/core";
+// import { fetchNavData } from "@palanikannan1437/rc4community-navbar-demo/core";
+
+import SessionProvider from "../pages/_app";
+
 
 export default async function RootLayout({
   children,
@@ -32,7 +35,9 @@ export default async function RootLayout({
         /> */}
         <div className="flex min-h-screen flex-col items-center justify-center py-2">
           <main className="mx-auto w-auto px-4 pt-16 pb-8 sm:pt-24 lg:px-8">
+            <SessionProvider>
             {children}
+            </SessionProvider>
           </main>
         </div>
       </body>
