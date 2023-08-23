@@ -1,55 +1,56 @@
 'use client'
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import TwitchFetch from "./twitch";
-import TwitchVideos from "./components/TwitchVideos";
 
 interface CustomSession {
-  accessToken: string; // Define accessToken property
-  // Define other session properties here
-}
-type SortOption = "time" | "trending" | "views";
-
-interface TwitchAuthProps {
-  clientId: string;
-  videoId: number;
-  sort: SortOption;
-  first: number;
+  accessToken: string; 
 }
 
-const TwitchAuth = ({ clientId, videoId, sort, first }: TwitchAuthProps) => {
-  const [accessToken, setAccessToken] = useState<string | undefined>();
-  
-  const { data: session } = useSession() as { data: CustomSession | null };
-  
-  useEffect(() => {
-    if (session?.accessToken!=undefined ) {
-        
-      setAccessToken(session.accessToken);
-    }
-  }, [session]);
 
-  // console.log("accessTokentype", typeof(accessToken));
-
+  const TwitchAuth = () => {
+    const [accessToken, setAccessToken] = useState<string | undefined>();
+    const [isCopied, setIsCopied] = useState(false);
+    const { data: session } = useSession() as { data: CustomSession | null };
   
-  if (session && accessToken!=undefined) {
-    const reponse = TwitchFetch(accessToken,clientId,videoId,sort,first);
-   
-    const ids= ['1019997229', '1875752272', '1866399733'] 
-    return (
-      <div>
-        <TwitchVideos videos={ids} />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => {
-            signOut();
-          }}
-        >
-          Sign Out
-        </button>
-      </div>
-    );
-  }
+    useEffect(() => {
+      if (session?.accessToken !== undefined) {
+        setAccessToken(session.accessToken);
+      }
+    }, [session]);
+  
+    const handleCopyClick = () => {
+      navigator.clipboard.writeText(accessToken)
+        .then(() => setIsCopied(true))
+        .catch(error => console.error('Copy failed:', error));
+  
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 3000);
+    };
+  
+    if (session && accessToken !== undefined) {
+      return (
+        <div className="flex flex-col items-center mt-10">
+          <p className="text-lg font-semibold mb-4">{accessToken}</p>
+          <button
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+              isCopied ? 'bg-green-500' : ''
+            }`}
+            onClick={handleCopyClick}
+          >
+            {isCopied ? 'Copied!' : 'Copy'}
+          </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 py-2 px-4 rounded"
+            onClick={() => {
+              signOut();
+            }}
+          >
+            Sign Out
+          </button>
+        </div>
+      );
+    } 
 
   return (
     <div>
