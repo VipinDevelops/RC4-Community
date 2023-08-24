@@ -31,7 +31,7 @@ interface CustomSession {
     if (session && accessToken !== undefined) {
       return (
         <div className="flex flex-col items-center mt-10">
-          <p className="text-lg font-semibold mb-4">{accessToken}</p>
+          <p className="text-lg mb-6 text-center text-white ">{accessToken}</p>
           <button
             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
               isCopied ? 'bg-green-500' : ''
