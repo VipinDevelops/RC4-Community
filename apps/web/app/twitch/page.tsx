@@ -13,7 +13,7 @@ export default async function Home() {
     
     const clientId = process.env.TWITCH_CLIENT_ID as string;
     const videoId = 1902927436
-    const accessToken = "yzwiwsz33r3pohtr1aopukxodzm02h"
+    const accessToken = "bwi9okma0g3tdutj4yave0315rquic"
     
 
 
@@ -21,7 +21,7 @@ export default async function Home() {
         <>
             <h1 className="text-3xl mb-6 text-center text-white">Twitch Components</h1>
                     
-        <Twitchauth></Twitchauth>
+        {/* <Twitchauth></Twitchauth> */}
         <TwitchFetchData accessToken={accessToken} clientId={clientId} videoId={videoId} sort={"views"} first={4} ></TwitchFetchData>
 
         

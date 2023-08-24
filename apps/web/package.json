@@ -3,10 +3,10 @@
   "version": "1.0.12",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev ",
     "build": "next build",
     "build-func": "tsup",
-    "start": "next start",
+    "start": "next start ",
     "lint": "next lint"
   },
   "dependencies": {
